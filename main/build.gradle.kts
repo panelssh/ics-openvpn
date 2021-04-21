@@ -1,4 +1,4 @@
-import com.android.build.gradle.api.ApplicationVariant
+import com.android.build.gradle.api.LibraryVariant
 
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
@@ -6,7 +6,7 @@ import com.android.build.gradle.api.ApplicationVariant
  */
 
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("checkstyle")
 
     id("kotlin-android")
@@ -109,17 +109,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
         sourceCompatibility = JavaVersion.VERSION_1_8
     }
-
-    splits {
-        abi {
-            isEnable = true
-            reset()
-            include("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
-            isUniversalApk = true
-        }
+    
+    libraryVariants.configureEach {
+        mergeAssetsProvider.get().dependsOn(externalNativeBuildProviders)
     }
-
-
 }
 
 var swigcmd = "swig"
@@ -148,8 +141,8 @@ fun registerGenTask(variantName: String, variantDirName: String): File {
     return baseDir
 }
 
-android.applicationVariants.all(object : Action<ApplicationVariant> {
-    override fun execute(variant: ApplicationVariant) {
+android.libraryVariants.all(object : Action<LibraryVariant> {
+    override fun execute(variant: LibraryVariant) {
         val sourceDir = registerGenTask(variant.name, variant.baseName.replace("-", "/"))
         val task = tasks.named("generateOpenVPN3Swig${variant.name}").get()
 
