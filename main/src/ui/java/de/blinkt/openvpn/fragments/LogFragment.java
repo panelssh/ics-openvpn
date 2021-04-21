@@ -10,6 +10,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -26,6 +27,7 @@ import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NavUtils;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.ListFragment;
 
@@ -105,17 +107,12 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId) {
-            case R.id.radioISO:
-                ladapter.setTimeFormat(LogWindowListAdapter.TIME_FORMAT_ISO);
-                break;
-            case R.id.radioNone:
-                ladapter.setTimeFormat(LogWindowListAdapter.TIME_FORMAT_NONE);
-                break;
-            case R.id.radioShort:
-                ladapter.setTimeFormat(LogWindowListAdapter.TIME_FORMAT_SHORT);
-                break;
-
+        if (checkedId == R.id.radioISO) {
+            ladapter.setTimeFormat(LogWindowListAdapter.TIME_FORMAT_ISO);
+        } else if (checkedId == R.id.radioNone) {
+            ladapter.setTimeFormat(LogWindowListAdapter.TIME_FORMAT_NONE);
+        } else if (checkedId == R.id.radioShort){
+            ladapter.setTimeFormat(LogWindowListAdapter.TIME_FORMAT_SHORT);
         }
     }
 
@@ -452,12 +449,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         } else if (item.getItemId() == android.R.id.home) {
             // This is called when the Home (Up) button is pressed
             // in the Action Bar.
-            Intent parentActivityIntent = new Intent(getActivity(), MainActivity.class);
-            parentActivityIntent.addFlags(
-                    Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(parentActivityIntent);
-            getActivity().finish();
+            NavUtils.navigateUpFromSameTask(getActivity());
             return true;
 
         }
