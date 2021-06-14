@@ -77,20 +77,20 @@ import de.blinkt.openvpn.core.VpnStatus.StateListener;
 import static de.blinkt.openvpn.core.OpenVPNService.humanReadableByteCount;
 
 public class LogFragment extends ListFragment implements StateListener, SeekBar.OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener, VpnStatus.ByteCountListener {
-    private static final String LOGTIMEFORMAT = "logtimeformat";
+    public static final String LOGTIMEFORMAT = "logtimeformat";
     private static final int START_VPN_CONFIG = 0;
-    private static final String VERBOSITYLEVEL = "verbositylevel";
+    public static final String VERBOSITYLEVEL = "verbositylevel";
 
 
 
-    private SeekBar mLogLevelSlider;
-    private LinearLayout mOptionsLayout;
-    private RadioGroup mTimeRadioGroup;
-    private TextView mUpStatus;
-    private TextView mDownStatus;
-    private TextView mConnectStatus;
-    private boolean mShowOptionsLayout;
-    private CheckBox mClearLogCheckBox;
+    public SeekBar mLogLevelSlider;
+    public LinearLayout mOptionsLayout;
+    public RadioGroup mTimeRadioGroup;
+    public TextView mUpStatus;
+    public TextView mDownStatus;
+    public TextView mConnectStatus;
+    public boolean mShowOptionsLayout;
+    public CheckBox mClearLogCheckBox;
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -138,7 +138,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     }
 
 
-    class LogWindowListAdapter implements ListAdapter, LogListener, Callback {
+    public class LogWindowListAdapter implements ListAdapter, LogListener, Callback {
 
         private static final int MESSAGE_NEWLOG = 0;
 
@@ -160,7 +160,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 
         private Vector<DataSetObserver> observers = new Vector<DataSetObserver>();
 
-        private int mTimeFormat = 0;
+        public int mTimeFormat = 0;
         private int mLogLevel = 3;
 
 
@@ -189,7 +189,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         }
 
 
-        private void shareLog() {
+        public void shareLog() {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.putExtra(Intent.EXTRA_TEXT, getLogStr());
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.ics_openvpn_log_file));
@@ -397,7 +397,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
             }
         }
 
-        void clearLog() {
+        public void clearLog() {
             // Actually is probably called from GUI Thread as result of the user
             // pressing a button. But better safe than sorry
             VpnStatus.clearLog();
@@ -419,8 +419,8 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     }
 
 
-    private LogWindowListAdapter ladapter;
-    private TextView mSpeedView;
+    public LogWindowListAdapter ladapter;
+    public TextView mSpeedView;
 
 
     @Override
