@@ -18,13 +18,11 @@ android {
     defaultConfig {
         minSdkVersion(14)
         targetSdkVersion(30)  //'Q'.toInt()
-        versionCode = 176
-        versionName = "0.7.22"
+        versionCode = 177
+        versionName = "0.7.23"
 
         externalNativeBuild {
             cmake {
-                //arguments = listOf("-DANDROID_TOOLCHAIN=clang",
-                //        "-DANDROID_STL=c++_static")
             }
         }
     }
@@ -35,7 +33,7 @@ android {
 
     externalNativeBuild {
         cmake {
-            path =File("${projectDir}/src/main/cpp/CMakeLists.txt")
+            path = File("${projectDir}/src/main/cpp/CMakeLists.txt")
         }
     }
 
